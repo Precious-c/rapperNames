@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+
 const PORT = 8000
 
 const rappers = {
@@ -13,10 +14,10 @@ const rappers = {
         birthName: 'Chancellor Bernett',
         birthLocation: 'Chicago, illinois'
     },
-    'dylan': {
-        age: 29,
-        birthName: 'Dylan',
-        birthLocation: 'Dylan'
+    'unknown': {
+        age: 0,
+        birthName: 'unknown',
+        birthLocation: 'unknown'
     }
 }
 
@@ -24,17 +25,15 @@ app.get('/', (request, response) => {
     response.sendFile(__dirname + '/index.html')
 })
 
-app.get('/api/:rapperName', (request, response) => {
-    const rapperName = request.params.rapperName.toLowerCase()
-    console.log(rapperName)
+app.get('/api/:name', (request, response) => {
+    const rapperName = request.params.name.toLowerCase()
     if(rappers[rapperName]){
         response.json(rappers[rapperName])
     } else {
-        response.json(rappers.dylan)
+        response.json(rappers['unknown'])
     }
-    
 })
 
 app.listen(PORT, () => {
-    console.log('The Server is running on port ' + PORT)
+    console.log(`The server is running at port ${PORT}`)
 })
